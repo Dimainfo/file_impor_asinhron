@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+
+    <title>Загрузка файла - асинхронно</title>
+  </head>
+  <body>
+    <input type="file" id="file" required />
+    <button onclick="post();">Загрузить</button>
+
+    <script>
+      function post() {
+        let file = document.getElementById('file').files[0]
+        let data = new FormData()
+
+        data.append('file', file)
+
+        var xhr = new XMLHttpRequest() // Создаём объект XMLHTTP
+        xhr.open('POST', 'upload.php', true) // Открываем асинхронное соединение
+
+        xhr.send(data) // Отправляем POST-запрос
+        xhr.onreadystatechange = function () // Ждём ответа от сервера
+        {
+          if (xhr.readyState == 4) {
+            // возвращает текущее состояние объекта(0-4)
+            if (xhr.status == 200) {
+              // код 200 (если страница не найдена вернет 404)
+              // summa.innerHTML = xhr.responseText;  // Выводим ответ сервера
+              return_data = xhr.responseText
+              alert(return_data)
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
